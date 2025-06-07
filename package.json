@@ -1,0 +1,17 @@
+{
+  "name": "generador-evaluaciones",
+  "version": "1.0.0",
+  "description": "Generador de evaluaciones con IA (Gemini) y Netlify.",
+  "main": "index.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Juan Manuel Caicedo Oliva",
+  "license": "ISC",
+  "dependencies": {
+    "@google/generative-ai": "^0.11.3",
+    "docx": "^9.5.0",
+    "file-saver": "^2.0.5",
+    "html-to-docx": "^1.8.0"
+  }
+}

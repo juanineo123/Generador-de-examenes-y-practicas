@@ -1,0 +1,13 @@
+# Archivo de configuración para Netlify
+
+[build]
+  # Directorio donde se encuentran las funciones serverless
+  functions = "netlify/functions"
+
+# Reglas de redirección para la API.
+# Esto nos permite llamar a las funciones desde el frontend 
+# con una URL más limpia (ej: /api/generate-evaluation)
+[[redirects]]
+  from = "/api/*"
+  to = "/.netlify/functions/:splat"
+  status = 200
