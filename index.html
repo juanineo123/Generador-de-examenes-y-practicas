@@ -4,6 +4,60 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Generador de Evaluaciones con IA</title>
+    <!-- ===== INICIO DEL CÓDIGO GUARDIA DE SEGURIDAD v2.0 ===== -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+    (async () => {
+        // --- CONFIGURACIÓN ---
+        // ¡IMPORTANTE! Reemplaza esto con la URL real y final de tu suite principal.
+        const loginPageUrl = 'https://transcendent-cascaron-19905f.netlify.app/'; 
+
+        // Claves de tu proyecto de Supabase (No tocar, son las mismas para todos)
+        const SUPABASE_URL = 'https://gswvzdgogalahbcfxdbi.supabase.co'; 
+        const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imdzd3Z6ZGdvZ2FsYWhiY2Z4ZGJpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTA3MjAwNzUsImV4cCI6MjA2NjI5NjA3NX0.3ieGReiMIQwfozDVtJyjIlpPJre1coeJtddqD3HJN-4'; 
+        
+        // --- LÓGICA DE VERIFICACIÓN (No tocar) ---
+        try {
+            const { createClient } = supabase;
+            const _supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
+
+            // 1. Intenta tomar la "llave de la sesión" desde la URL.
+            const params = new URLSearchParams(window.location.hash.substring(1));
+            const accessToken = params.get('access_token');
+            const refreshToken = params.get('refresh_token');
+
+            if (accessToken && refreshToken) {
+                // Si encuentra la llave, la usa para iniciar sesión en esta ventana.
+                const { error } = await _supabase.auth.setSession({
+                    access_token: accessToken,
+                    refresh_token: refreshToken,
+                });
+
+                if (error) {
+                    // Si hay un error al usar la llave, es mejor redirigir.
+                    throw new Error('Error al establecer la sesión con el token.');
+                }
+            }
+
+            // 2. Ahora, verifica si la sesión es válida.
+            const { data: { session } } = await _supabase.auth.getSession();
+
+            if (!session) {
+                // Si, a pesar de todo, NO hay sesión, redirige al login.
+                // Usamos top.location para asegurar que se redirija la página principal,
+                // no solo la ventana flotante.
+                window.top.location.replace(loginPageUrl);
+            }
+            // Si hay sesión, no hace nada y permite que la página se cargue.
+            
+        } catch (error) {
+            console.error('Error en la verificación de sesión:', error);
+            // En caso de error, por seguridad, redirige al login.
+            window.top.location.replace(loginPageUrl);
+        }
+    })();
+</script>
+<!-- ===== FIN DEL CÓDIGO GUARDIA DE SEGURIDAD v2.0 ===== -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
